@@ -7,6 +7,8 @@ use App\Http\Requests\productUpdateRequest;
 use App\Http\Requests\ProductValidate;
 use App\Products;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class ProductController extends Controller
 {
@@ -45,7 +47,10 @@ class ProductController extends Controller
         $featured = $request->file('image');
         $featured_name = time() . $featured->getClientOriginalName();
 
-        $featured->move('uploads/Products', $featured_name);
+        $resized = Image::make($featured);
+         $resized->resize('400','400')->save('uploads/Products/thumbnail/'.$featured_name);
+
+//        $featured->move('uploads/Products', $featured_name);
 
         $product = Products::create([
             'name'=>$request->name,
@@ -54,9 +59,13 @@ class ProductController extends Controller
             'description'=>$request->description,
             'slug' =>str_slug($request->name),
             'category_id'=>$request->category_id,
+            'offer'=>$request->offer ? 1 : 0 ,
+            'offer_price'=>$request->offer_price ? $request->offer_price : 0 ,
+            'featured'=>$request->featured
         ]);
         if($product){
-            return redirect()->route('products.index')->with('message',"Created Successfuy");
+            Session::flash('success','Product Added Successfully');
+            return redirect()->route('products.index');
         }
 
     }
@@ -94,24 +103,29 @@ class ProductController extends Controller
      */
     public function update(productUpdateRequest $request, $id)
     {
-        $update = Products::FindOrFail($id);
+        $update = Products::findOrFail($id);
         if($request->hasFile('image')){
             if($update->image != NULL){
-                unlink(public_path().'/uploads/Products' . $update->image);
+                unlink(public_path().'/uploads/Products/thumbnail/' . $update->image);
             }
             $product = $request->file('image');
             $image_name = time() . $product->getClientOriginalName();
-            $product->move('uploads/Products',$image_name);
+            $resize = Image::make($product);
+            $resize->resize('400','400')->save('uploads/Products/thumbnail/'.$image_name);
+//            $product->move('uploads/Products',$image_name);
             $update->image = $image_name;
         }
         $update->name = $request->name;
             $update->price = $request->price;
                 $update->description = $request->description;
                 $update->category_id = $request->category_id;
-
+                $update->offer = $request->offer ? $request->offer : 0;
+                $update->offer_price = $request->offer_price ? $request->offer_price : 0 ;
+                $update->featured = $request->featured;
                $updated = $update->save();
                if($updated){
-                   return redirect()->route('products.index')->with('message','Product updated Successfuly');
+                   Session::flash('success','Product Updated Successfully');
+                   return redirect()->route('products.index');
                }
     }
 
@@ -124,9 +138,13 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $delete = Products::findOrFail($id);
+        if ($delete->image != null){
+            unlink(public_path().'/uploads/Products/thumbnail/' . $delete->image);
+        }
         $deleted = $delete->delete();
         if($deleted){
-            return redirect()->route('products.index')->with('message','Product Successfully Deleted. ');
+            Session::flash('delete','Product Deleted Successfully');
+            return redirect()->route('products.index');
         }
     }
 }

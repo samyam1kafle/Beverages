@@ -6,14 +6,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                All Product List
+                Category Section
 
             </h1>
             <ol class="breadcrumb">
-                <li><i class="fa fa-dashboard"></i> admin</li>
-                <li>Ui elements</li>
-                <li>Products</li>
-                <li class="active">View all Products</li>
+                <li><a href="{{url('admin/index')}}"><i class="fa fa-dashboard"></i> Admin</a></li>
+                <li><a href="{{route('categories.index')}}">Categories</a></li>
+                <li class="active">Create</li>
             </ol>
         </section>
 
@@ -34,6 +33,9 @@
                                 <tr>
                                     <th>Category Id</th>
                                     <th>Category Title</th>
+                                    <th>Category Slug</th>
+                                    <th>Category Description</th>
+                                    <th>Parent Category</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Edit</th>
@@ -47,6 +49,9 @@
                                         <td>{{$category->id}}</td>
                                         <td>{{$category->title}}
                                         </td>
+                                        <td>{{$category->slug}}</td>
+                                        <td>{{$category->description}}</td>
+                                        <td>{{$category->parent_id}}</td>
                                         <td>{{$category->created_at}}</td>
                                         <td>{{$category->updated_at}}</td>
                                         <td>

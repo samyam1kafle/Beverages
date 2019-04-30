@@ -11,10 +11,8 @@
             </h1>
 
             <ol class="breadcrumb">
-                <li><i class="fa fa-dashboard"></i> admin</li>
-                <li>Ui elements</li>
-                <li>Products</li>
-                <li class="active">View all Products</li>
+                <li><a href="{{url('admin/index')}}"><i class="fa fa-dashboard"></i> Admin</a></li>
+                <li class="active">Products</li>
             </ol>
         </section>
 
@@ -39,7 +37,10 @@
                                     <th>Product
                                         Title
                                     </th>
+                                    <th>Featured</th>
                                     <th>Product Category</th>
+                                    <th>Product Offer</th>
+                                    <th>Offered price</th>
                                     <th>Image</th>
                                     <th>Price</th>
                                     <th>Description</th>
@@ -54,9 +55,12 @@
                                     <tr>
                                         <td>{{$product->id}}</td>
                                         <td>{{$product->name}}</td>
-                                        <td>{{$product->category->title}}</td>
+                                        <td>{{$product->featured ? 'Yes' : 'No'}}</td>
+                                        <td>{{$product->category ? $product->category->title : ''}}</td>
+                                        <td>{{$product->offer ? 'Yes' : 'No' }}</td>
+                                        <td>{{$product->offer ? $product->offer_price : ''}}</td>
                                         <td>
-                                            <img src="{{asset('uploads/Products/'.$product->image)}}" alt="" width="150px" height="100">
+                                            <img src="{{asset('uploads/Products/thumbnail/'.$product->image)}}" alt="" width="150px" height="100">
                                         </td>
                                         <td>{{$product->price}}</td>
                                         <td>{{str_limit($product->description,250)}}</td>

@@ -18,7 +18,7 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form action="{{route('products.update',$product->id)}}" method="post" autocomplete="on">
+                        <form action="{{route('products.update',$product->id)}}" method="post" autocomplete="on" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <input type="hidden" name="_method" value="PUT">
                             <div class="box-body">
@@ -35,7 +35,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputFile">Products Picture</label>
                                     <input type="file" name="image" id="product_image">
-                                    <img src="{{asset('uploads/Products/'.$product->image)}}" width="100" length="100">
+                                    <img src="{{asset('uploads/Products/thumbnail/'.$product->image)}}" width="100" length="100">
 
                                 </div>
 
@@ -49,11 +49,35 @@
                                     </select>
                                 </div>
 
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" id="ofr" value="1" onclick="offerPrice(0)" name="offer"
+                                               checked/>Have Offer
+                                    </label>
+                                    <label> <input type="radio" id="ofr" value="0" onclick="offerPrice(1)"
+                                                   name="offer"/>Don't Have Offer</label>
+                                    <br>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <input type="text" name="offer_price" class="form-control" id="offered_Price"
+                                           value="{{$product->offer_price}}">
+                                </div>
+                                <hr>
+
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" id="fea" value="1" name="featured"/>Featured
+                                    </label>
+                                    <label> <input type="radio" id="fea" value="0" name="featured" checked/>Not featured</label>
+                                    <br>
+                                </div>
+                                <hr>
 
                                 <div class="form-group">
                                     {{--<label for="Specification of the product">Specification</label>--}}
                                     <textarea name="description" id="editor"
-                                              >{{$product->description}}</textarea>
+                                    >{{$product->description}}</textarea>
                                 </div>
 
 

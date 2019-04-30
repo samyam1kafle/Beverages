@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Role;
+use App\Roles;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+
 
 class RoleControler extends Controller
 {
@@ -14,8 +15,9 @@ class RoleControler extends Controller
      */
     public function index()
     {
-        $roles = Role::orderBy('id','asc')->paginate(5);
-       return view('Backend/roles/index',compact('roles'));
+        $roles = Roles::orderBy('id', 'asc')->paginate(10);
+
+        return view('Backend/roles/index', compact('roles'));
     }
 
     /**
@@ -31,21 +33,24 @@ class RoleControler extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $new_role = Role::create($request->all());
-        if($new_role){
-            return redirect()->route('roles.index')->with('message','New Role Created Successfully');
+        $new_role = Roles::create($request->all());
+        if ($new_role) {
+            Session::flash('success', 'New Role Created Successfully');
+            return redirect()->route('roles.index');
         }
+
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -56,43 +61,47 @@ class RoleControler extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $roles = Role::findOrFail($id);
-        return view('Backend/roles/edit',compact('roles'));
+        $roles = Roles::findOrFail($id);
+        return view('Backend/roles/edit', compact('roles'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $update = Role::findOrFail($id);
+        $update = Roles::findOrFail($id);
         $updated = $update->update($request->all());
-        if($updated){
-            return redirect()->route('roles.index')->with('message','Role Updated Successfully');
+        if ($updated) {
+            Session::flash('success', 'Role Updated Successfully');
+
+            return redirect()->route('roles.index');
         }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $delete = Role::findOrFail($id);
+        $delete = Roles::findOrFail($id);
         $deleted = $delete->delete();
-        if($deleted){
-            return redirect()->route('roles.index')->with('message','Role Deleted Successfully');
+        if ($deleted) {
+
+Session::flash('delete','Role Deleted Successfully');
+            return redirect()->route('roles.index');
         }
     }
 }

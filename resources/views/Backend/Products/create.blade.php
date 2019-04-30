@@ -6,6 +6,17 @@
         <!-- Content Header (Page header) -->
 
 
+        <section class="content-header">
+            <h1>
+                Product Section
+
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{{url('admin/index')}}"><i class="fa fa-dashboard"></i> Admin</a></li>
+                <li><a href="{{route('products.index')}}">Products</a></li>
+                <li class="active">Create</li>
+            </ol>
+        </section>
         <!-- Main content -->
         <section class="content">
             <div class="row">
@@ -45,9 +56,33 @@
                                     </select>
                                 </div>
 
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" id="ofr" value="1" onclick="offerPrice(0)" name="offer"
+                                               checked/>Have Offer
+                                    </label>
+                                    <label> <input type="radio" id="ofr" value="0" onclick="offerPrice(1)"
+                                                   name="offer"/>Don't Have Offer</label>
+                                    <br>
+                                </div>
 
+                                <br>
                                 <div class="form-group">
-                                    {{--<label for="Specification of the product">Specification</label>--}}
+                                    <input type="text" name="offer_price" class="form-control" id="offered_Price"
+                                           placeholder="Offered Price">
+                                </div>
+                                <hr>
+
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" id="fea" value="1" name="featured"/>Featured
+                                    </label>
+                                    <label> <input type="radio" id="fea" value="0" name="featured" checked/>Not featured</label>
+                                    <br>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+
                                     <textarea name="description" id="editor"
                                               placeholder="Specification of the product Here" cols="auto"
                                               rows="auto"></textarea>

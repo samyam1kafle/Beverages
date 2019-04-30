@@ -28,6 +28,7 @@ class ProductValidate extends FormRequest
             'price'=>'required',
             'image'=>'required',
             'description'=>'required|max:50000',
+           
         ];
     }
 }

@@ -4,4 +4,5 @@
 @yield('header')
 @yield('aside')
 @yield('content')
+
 @yield('footer')

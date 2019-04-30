@@ -6,14 +6,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                All Product List
+                All Roles List
 
             </h1>
             <ol class="breadcrumb">
-                <li><i class="fa fa-dashboard"></i> admin</li>
-                <li>Ui elements</li>
-                <li>Products</li>
-                <li class="active">View all Products</li>
+                <li><a href="{{url('admin/index')}}"><i class="fa fa-dashboard"></i> Admin</a></li>
+                <li class="active">Roles</li>
             </ol>
         </section>
 

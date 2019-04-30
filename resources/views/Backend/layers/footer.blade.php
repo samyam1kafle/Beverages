@@ -46,9 +46,33 @@
 
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
     <script>
-        CKEDITOR.replace( 'editor' );
+        CKEDITOR.replace('editor');
     </script>
 
+    <script src="{{asset('js/toastr.min.js')}}"></script>
+    <script>
+        @if(Session::has('success'))
+        toastr.success("{{Session::get('success')}}")
+
+        @endif
+        @if(Session::has('delete'))
+        toastr.info("{{Session::get('delete')}}")
+        @endif
+
+    </script>
+
+    <script>
+        function offerPrice(x) {
+            if (x==0) {
+
+                document.getElementById('offered_Price').style.display = 'block';
+            } else {
+                document.getElementById('offered_Price').style.display = 'none';
+            }
+            return;
+        }
+
+    </script>
 
     </body>
     </html>

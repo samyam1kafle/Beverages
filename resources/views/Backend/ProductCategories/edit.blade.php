@@ -14,7 +14,7 @@
                     <!-- general form elements -->
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Edit  Category</h3>
+                            <h3 class="box-title">Edit Category</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
@@ -25,7 +25,25 @@
                                 <div class="form-group">
                                     <label for="Category_edit">Category To Be Updated</label>
                                     <input type="text" class="form-control" id="Cat_title" name="title"
-                                           placeholder="{{$category->title}}">
+                                           value="{{$category->title}}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="Category_edit">Description To Be Updated</label>
+                                    <input type="text" class="form-control" id="Cat_title" name="description"
+                                           value="{{$category->description}}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Category Type</label>
+
+                                    <select class="form-control" name="parent_id">
+                                        <option value="0">None</option>
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}">{{$category->title}}</option>
+                                        @endforeach
+                                    </select>
+
                                 </div>
 
 

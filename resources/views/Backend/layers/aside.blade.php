@@ -5,9 +5,7 @@
         <header class="main-header">
             <!-- Logo -->
             <a href="{{url('admin/index')}}" class="logo">
-                <!-- mini logo for sidebar mini 50x50 pixels -->
-                {{--<span class="logo-mini"><b>A</b>LT</span>--}}
-                <!-- logo for regular state and mobile devices -->
+
                 <span class="logo-lg"><b>Admin</b></span>
             </a>
             <!-- Header Navbar: style can be found in header.less -->
@@ -18,8 +16,10 @@
                 </a>
 
                 <div class="navbar-custom-menu">
-                    <ul class="nav navbar-nav">
-
+                    <ul class="nav navbar-right">
+                        <a href="{{route('home-index')}}" class="logo">
+                            <span class="logo-lg"><b>Home</b></span>
+                        </a>
 
                     </ul>
                 </div>
@@ -31,17 +31,18 @@
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="{{asset('admin/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
+                        <img src="{{asset('uploads/Users/1555827325FB_IMG_1496280530823.jpg')}}" class="img-circle"
+                             alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>Alexander Pierce</p>
+                        <p>Samyam</p>
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
                 <!-- search form -->
-                <form action="#" method="get" class="sidebar-form">
+                <form action="{{url('search')}}" method="get" class="sidebar-form">
                     <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Search...">
+                        <input type="text" name="query" class="form-control" placeholder="Search...">
                         <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
@@ -60,13 +61,11 @@
             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="active"><a href="{{url('admin/index')}}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+                            <li class="active"><a href="{{url('admin/index')}}"><i class="fa fa-circle-o"></i> Dashboard</a>
+                            </li>
 
                         </ul>
                     </li>
-
-
-
 
 
                     <li class="treeview menu-open">
@@ -100,7 +99,8 @@
                                 <ul class="treeview-menu" style="display: none;">
                                     <li><a href="{{route('categories.create')}}"><i class="fa fa-circle-o"></i> Add
                                             new Category</a></li>
-                                    <li><a href="{{route('categories.index')}}"><i class="fa fa-circle-o"></i> View Categories</a></li>
+                                    <li><a href="{{route('categories.index')}}"><i class="fa fa-circle-o"></i> View
+                                            Categories</a></li>
                                 </ul>
                             </li>
 
@@ -113,7 +113,8 @@
                                 <ul class="treeview-menu" style="display: none;">
                                     <li><a href="{{route('users.create')}}"><i class="fa fa-user-circle"></i> Add
                                             Customers</a></li>
-                                    <li><a href="{{route('users.index')}}"><i class="fa fa-user-circle"></i> View Customers</a></li>
+                                    <li><a href="{{route('users.index')}}"><i class="fa fa-user-circle"></i> View
+                                            Customers</a></li>
                                 </ul>
                             </li>
 
@@ -126,9 +127,33 @@
                                 <ul class="treeview-menu" style="display: none;">
                                     <li><a href="{{route('roles.create')}}"><i class="fa fa-user-circle"></i> Add
                                             New Roles</a></li>
-                                    <li><a href="{{route('roles.index')}}"><i class="fa fa-user-circle"></i> View All Roles</a></li>
+                                    <li><a href="{{route('roles.index')}}"><i class="fa fa-user-circle"></i> View All
+                                            Roles</a></li>
                                 </ul>
                             </li>
+
+                            <li class="treeview" id="dropdown">
+                                <a href="#" style=""><i class="fa fa-user"></i> Offers & News
+                                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                                </a>
+                                <ul class="treeview-menu" style="display: none;">
+                                    <li><a href="{{route('offers')}}"><i class="fa fa-diamond"></i> View All Offers</a>
+                                    </li>
+                                    <li><a href="{{route('blogs.index')}}"><i class="fa fa-diamond"></i>Special
+                                            Offers</a></li>
+                                    <li><a href="{{route('blogs.create')}}"><i class="fa fa-diamond"></i>Add Special
+                                            Offers</a></li>
+                                        <hr>
+                                    <li><a href="{{route('index')}}"><i class="fa fa-diamond"></i> View All News</a>
+                                    </li>
+                                    <li><a href="{{route('add-news')}}"><i class="fa fa-diamond"></i>Add News</a></li>
+                                </ul>
+
+
+                            </li>
+
 
                         </ul>
                     </li>

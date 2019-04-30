@@ -6,15 +6,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                All Product List
+                Users Section
 
             </h1>
-
             <ol class="breadcrumb">
-                <li><i class="fa fa-dashboard"></i> admin</li>
-                <li>Ui elements</li>
-                <li>Products</li>
-                <li class="active">View all Products</li>
+                <li><a href="{{url('admin/index')}}"><i class="fa fa-dashboard"></i> Admin</a></li>
+                <li class="active">Users</li>
             </ol>
         </section>
 
@@ -26,7 +23,7 @@
 
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Products list</h3>
+                            <h3 class="box-title">Customers list</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -55,13 +52,15 @@
                                         <td>{{$user->id}}</td>
                                         <td>{{$user->name}}</td>
                                         <td>
-                                            <img src="{{asset('uploads/Users/'.$user->image)}}" alt="Users image" width="50px" height="60">
+                                            <img src="{{asset('uploads/Users/'.$user->image) }}"
+                                                 alt="Users image" width="50px" height="60">
                                         </td>
-                                        <td>{{$user->roles->name}}</td>
+                                        <td>{{$user->roles ? $user->roles->name : ''}}</td>
                                         <td>{{$user->Is_active}}</td>
                                         <td>{{$user->email}}</td>
                                         <td>{{$user->created_at}}</td>
                                         <td>{{$user->updated_at}}</td>
+
                                         <td>
                                             <form action="{{route('users.edit',$user->id)}}" method="GET">
                                                 {{method_field('PUT')}}
@@ -78,6 +77,7 @@
                                         </td>
 
                                     </tr>
+
                                 @endforeach
 
                                 </tbody>
@@ -95,6 +95,6 @@
             <!-- /.row -->
         </section>
     </div>
-        <!-- /.content -->
+    <!-- /.content -->
 @endsection
 

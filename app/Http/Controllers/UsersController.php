@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\userUpdateValidation;
 use App\Http\Requests\userValidation;
-use App\Role;
+use App\Roles;
 use App\User;
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class UsersController extends Controller
 {
@@ -17,7 +18,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('role','asc')->paginate(5);
+        $users = User::orderBy('role','asc')->paginate(10);
         return view('Backend/Users/index',compact('users'));
     }
 
@@ -28,7 +29,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
+        $roles = Roles::all();
         return view('Backend/Users/create',compact('roles'));
     }
 
@@ -42,7 +43,9 @@ class UsersController extends Controller
     {
         $featured = $request->file('image');
         $name = time() . $featured->getClientOriginalName();
-        $featured->move('uploads/Users',$name);
+        $resize = Image::make($featured);
+        $resize->resize('600','600')->save('uploads/Users/'.$name);
+//        $featured->move('uploads/Users',$name);
         $created = User::create([
             'name'=>$request->name,
             'image'=>$name,
@@ -53,7 +56,7 @@ class UsersController extends Controller
 
         $success = $created->save();
         if($success){
-            return redirect()->route('users.index')->with('message','User Created Successfully');
+            return redirect()->route('users.index')->with('success','User Created Successfully');
         }
     }
 
@@ -77,7 +80,7 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $roles = Role::all();
+        $roles = Roles::all();
         return view('Backend/Users/edit',compact('user','roles'));
     }
 
@@ -97,14 +100,17 @@ class UsersController extends Controller
            }
            $featured = $request->file('image');
            $name = time(). $featured->getClientOriginalName();
-          $update->image = $featured->move('/uploads/Users',$name);
+           $resize = Image::make($featured);
+           $resize->resize('600','600')->save('uploads/Users/'.$name);
+//           $featured->move('uploads/Users',$name);
+           $update->image = $name;
        }
        $update->name = $request->name;
        $update->email = $request->email;
        $update->role = $request->role;
        $updated = $update->save();
     if($updated){
-        return redirect()->route('users.index')->with('message','User Updated Successfully');
+        return redirect()->route('users.index')->with('success','User Updated Successfully');
     }
     }
 
@@ -118,7 +124,7 @@ class UsersController extends Controller
     {
         $delete = User::findOrFail($id);
         if($delete->delete()){
-            return redirect()->route('users.index')->with('message','Deleted Successfully');
+            return redirect()->route('users.index')->with('delete','User Removed Successfully');
         }
     }
 }

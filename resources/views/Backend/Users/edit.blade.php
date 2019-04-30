@@ -18,7 +18,7 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form action="{{route('users.update',$user->id)}}" method="post" autocomplete="on">
+                        <form action="{{route('users.update',$user->id)}}" method="post" autocomplete="on" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <input type="hidden" name="_method" value="PUT">
                             <div class="box-body">
