@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AllUser;
 use App\Http\Requests\userUpdateValidation;
 use App\Http\Requests\userValidation;
-use App\Roles;
-use App\User;
+use App\Models\Roles;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class UsersController extends Controller
@@ -18,7 +19,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('role','asc')->paginate(10);
+        $users = AllUser::orderBy('role','asc')->paginate(10);
         return view('Backend/Users/index',compact('users'));
     }
 
@@ -46,7 +47,7 @@ class UsersController extends Controller
         $resize = Image::make($featured);
         $resize->resize('600','600')->save('uploads/Users/'.$name);
 //        $featured->move('uploads/Users',$name);
-        $created = User::create([
+        $created = AllUser::create([
             'name'=>$request->name,
             'image'=>$name,
             'role'=>$request->role,
@@ -79,7 +80,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = AllUser::findOrFail($id);
         $roles = Roles::all();
         return view('Backend/Users/edit',compact('user','roles'));
     }
@@ -93,7 +94,7 @@ class UsersController extends Controller
      */
     public function update(userUpdateValidation $request, $id)
     {
-       $update = User::findOrFail($id);
+       $update = AllUser::findOrFail($id);
        if($request->hasFile('image')){
            if ($update->image != Null){
                 unlink(public_path().'/uploads/Users/'.$update->image);
@@ -122,7 +123,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $delete = User::findOrFail($id);
+        $delete = AllUser::findOrFail($id);
         if($delete->delete()){
             return redirect()->route('users.index')->with('delete','User Removed Successfully');
         }

@@ -1,5 +1,4 @@
 @extends('Backend.master')
-
 @section('content')
 
     <div class="content-wrapper">
@@ -18,7 +17,8 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form action="{{route('products.update',$product->id)}}" method="post" autocomplete="on" enctype="multipart/form-data">
+                        <form action="{{route('products.update',$product->id)}}" method="post" autocomplete="on"
+                              enctype="multipart/form-data">
                             {{csrf_field()}}
                             <input type="hidden" name="_method" value="PUT">
                             <div class="box-body">
@@ -35,7 +35,8 @@
                                 <div class="form-group">
                                     <label for="exampleInputFile">Products Picture</label>
                                     <input type="file" name="image" id="product_image">
-                                    <img src="{{asset('uploads/Products/thumbnail/'.$product->image)}}" width="100" length="100">
+                                    <img src="{{asset('uploads/Products/thumbnail/'.$product->image)}}" width="100"
+                                         length="100">
 
                                 </div>
 
@@ -46,6 +47,26 @@
 
                                             <option value="{{$category->id}}">{{$category->title}}</option>
                                         @endforeach
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="Product Category">Product Volume</label>
+                                    <select class="form-control" name="volume">
+
+                                        <option value="1 Ltr">1 ltr</option>
+                                        <option value="750 Ml">750 Ml</option>
+                                        <option value="500 Ml">500 Ml</option>
+                                        <option value="250 Ml">250 Ml</option>
+                                        <option value="1 KG">1 Kg</option>
+                                        <option value="750 Grams">750 Grams</option>
+                                        <option value="500 Grams">500 Grams</option>
+                                        <option value="250 Grams">250 Grams</option>
+                                        <option value="1 pack">Full pack</option>
+                                        <option value="1/2 pack">Mini pack</option>
+
+
                                     </select>
                                 </div>
 
@@ -72,6 +93,15 @@
                                     <label> <input type="radio" id="fea" value="0" name="featured" checked/>Not featured</label>
                                     <br>
                                 </div>
+
+                                <hr>
+
+                                <div class="form-group">
+                                    <label for="Product in stock">In Stock</label>
+                                    <input type="text" name="stock" class="form-control" id="stock"
+                                           value="{{$product->stock}}">
+                                </div>
+
                                 <hr>
 
                                 <div class="form-group">
@@ -104,13 +134,9 @@
         <!-- /.content -->
     </div>
     @if(count($errors)>0)
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                @endforeach
-            </ul>
-        </div>
+        @foreach($errors->all() as $error)
+            {{Session::flash('Error',$error)}}
+        @endforeach
     @endif
     <!-- /.box -->
 @endsection

@@ -52,7 +52,7 @@
                                         <td>{{$user->id}}</td>
                                         <td>{{$user->name}}</td>
                                         <td>
-                                            <img src="{{asset('uploads/Users/'.$user->image) }}"
+                                            <img src="{{asset('uploads/Users/'.$user->image)}}"
                                                  alt="Users image" width="50px" height="60">
                                         </td>
                                         <td>{{$user->roles ? $user->roles->name : ''}}</td>

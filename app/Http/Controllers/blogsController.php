@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Blog;
-use App\Category;
+use App\Models\Blog;
+use App\Models\Category;
 use Session;
-use App\Products;
+use App\Models\Products;
 use Illuminate\Http\Request;
 
 class blogsController extends Controller
@@ -56,7 +56,6 @@ class blogsController extends Controller
             'offer_product_name'=>$request->offer_product_name,
             'real_price'=>$request->real_price,
             'offered_price'=>$request->offered_price,
-            'slug'=>str_slug($request->offer_product_name),
             'image'=>$name,
             'description'=>$request->description,
             'category_id'=>$request->category_id
@@ -114,7 +113,6 @@ class blogsController extends Controller
        $update->offer_product_name = $request->offer_product_name;
        $update->real_price = $request->real_price;
        $update->offered_price = $request->offered_price;
-       $update->slug = str_slug($request->offer_product_name);
        $update->description = $request->description;
        $update->category_id = $request->category_id;
        $updated = $update->save();

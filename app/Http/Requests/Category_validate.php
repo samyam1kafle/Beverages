@@ -26,7 +26,6 @@ class Category_validate extends FormRequest
         return [
             'title'=>'required',
             'description'=>'required',
-
         ];
     }
 }

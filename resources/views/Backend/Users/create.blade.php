@@ -17,6 +17,11 @@
         <!-- Main content -->
         <section class="content">
             <div class="row">
+                @if(count($errors)>0)
+                    @foreach($errors->all() as $error)
+                        {{Session::flash('Error',$error)}}
+                @endforeach
+            @endif
                 <!-- left column -->
                 <div class="col-md-12">
                     <!-- general form elements -->
@@ -41,7 +46,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1"
+                                    <input type="password"  name="password" class="form-control" id="exampleInputPassword1"
                                            placeholder="XXXXXXXXXX">
                                 </div>
                                 <div class="form-group">
@@ -76,15 +81,7 @@
                         </form>
 
                     </div>
-                    @if(count($errors)>0)
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach($errors->all() as $error)
-                                    <li>{{$error}}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+
 
                 </div>
 

@@ -56,6 +56,25 @@
                                     </select>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="Product Category">Product Volume</label>
+                                    <select class="form-control" name="volume">
+
+                                        <option value="1 Ltr">1 ltr</option>
+                                        <option value="750 Ml">750 Ml</option>
+                                        <option value="500 Ml">500 Ml</option>
+                                        <option value="250 Ml">250 Ml</option>
+                                        <option value="1 KG">1 Kg</option>
+                                        <option value="750 Grams">750 Grams</option>
+                                        <option value="500 Grams">500 Grams</option>
+                                        <option value="250 Grams">250 Grams</option>
+                                        <option value="1 pack">Full pack</option>
+                                        <option value="1/2 pack">Mini pack</option>
+
+
+                                    </select>
+                                </div>
+
                                 <div class="radio">
                                     <label>
                                         <input type="radio" id="ofr" value="1" onclick="offerPrice(0)" name="offer"
@@ -79,6 +98,12 @@
                                     </label>
                                     <label> <input type="radio" id="fea" value="0" name="featured" checked/>Not featured</label>
                                     <br>
+                                </div>
+
+                                <hr>
+                                <div class="form-group">
+                                    <label for="Total items in stock">Total items in stock</label>
+                                    <input type="text" name="stock" class="form-control" id="stock" placeholder="Availability">
                                 </div>
                                 <hr>
                                 <div class="form-group">
@@ -112,13 +137,11 @@
         <!-- /.content -->
     </div>
     @if(count($errors)>0)
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                @endforeach
-            </ul>
-        </div>
+        @if(count($errors)>0)
+            @foreach($errors->all() as $error)
+                {{Session::flash('Error',$error)}}
+            @endforeach
+        @endif
     @endif
     <!-- /.box -->
 @endsection

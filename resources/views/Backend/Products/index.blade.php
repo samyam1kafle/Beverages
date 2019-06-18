@@ -26,11 +26,15 @@
                         <div class="box-header">
                             <h3 class="box-title">Products list</h3>
                         </div>
+
                         <!-- /.box-header -->
                         <div class="box-body">
+
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
+                                    <th><input type="checkbox" id="master">
+                                    </th>
                                     <th>Product
                                         ID
                                     </th>
@@ -39,10 +43,12 @@
                                     </th>
                                     <th>Featured</th>
                                     <th>Product Category</th>
+                                    <th>Product Volume</th>
+                                    <th>In stock</th>
                                     <th>Product Offer</th>
                                     <th>Offered price</th>
+                                    <th>Real Price</th>
                                     <th>Image</th>
-                                    <th>Price</th>
                                     <th>Description</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
@@ -53,16 +59,20 @@
                                 <tbody>
                                 @foreach($products as $product)
                                     <tr>
+                                        <td><input type="checkbox" class="sub_chk" data-id="{{$product->id}}"></td>
                                         <td>{{$product->id}}</td>
                                         <td>{{$product->name}}</td>
                                         <td>{{$product->featured ? 'Yes' : 'No'}}</td>
                                         <td>{{$product->category ? $product->category->title : ''}}</td>
+                                        <td>{{$product->volume}}</td>
+                                        <td>{{$product->stock}}</td>
                                         <td>{{$product->offer ? 'Yes' : 'No' }}</td>
                                         <td>{{$product->offer ? $product->offer_price : ''}}</td>
-                                        <td>
-                                            <img src="{{asset('uploads/Products/thumbnail/'.$product->image)}}" alt="" width="150px" height="100">
-                                        </td>
                                         <td>{{$product->price}}</td>
+                                        <td>
+                                            <img src="{{asset('uploads/Products/thumbnail/'.$product->image)}}" alt=""
+                                                 width="150px" height="100">
+                                        </td>
                                         <td>{{str_limit($product->description,250)}}</td>
                                         <td>{{$product->created_at}}</td>
                                         <td>{{$product->updated_at}}</td>
@@ -80,7 +90,6 @@
                                                 {{csrf_field()}}
                                             </form>
                                         </td>
-
                                     </tr>
                                 @endforeach
 
@@ -92,13 +101,18 @@
                         </div>
                         <!-- /.box-body -->
                     </div>
+                    <div class="col-sm-offset-10">
+                        {{$products->render()}}
+                    </div>
                     <!-- /.box -->
                 </div>
+
                 <!-- /.col -->
             </div>
             <!-- /.row -->
         </section>
+
     </div>
-        <!-- /.content -->
+    <!-- /.content -->
 @endsection
 

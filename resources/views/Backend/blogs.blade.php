@@ -50,7 +50,7 @@
                                         <td>{{$blog->name}}
                                         </td>
                                         <td>
-                                            <img src="{{asset('uploads/Products/'.$blog->image)}}" width="100" height="75" alt="">
+                                            <img src="{{asset('uploads/Products/thumbnail/'.$blog->image)}}" width="100" height="75" alt="">
                                         </td>
                                         <td>{{$blog->price}}</td>
                                         <td>{{$blog->offer_price}}</td>

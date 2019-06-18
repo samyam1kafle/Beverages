@@ -31,13 +31,31 @@
               <p>Total Products</p>
             </div>
             <div class="icon">
-              <i class="fa fa-shopping-cart"></i>
+              <i class="fa fa-cubes"></i>
             </div>
             <a href="{{url('admin/products')}}" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
           </div>
         </div>
+        <!-- small box -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>{{$orders}}</h3>
+
+              <p>Total Order</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-shopping-basket"></i>
+            </div>
+            <a href="{{route('BackendCart')}}" class="small-box-footer">
+              More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+          </div>
+        </div>
+
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
@@ -65,7 +83,7 @@
               <p>Users Registered</p>
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="fa fa-registered"></i>
             </div>
             <a href="{{url('admin/users')}}" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
@@ -85,6 +103,24 @@
               <i class="ion ion-pie-graph"></i>
             </div>
             <a href="{{url('admin/roles')}}" class="small-box-footer">
+              More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+          </div>
+        </div>
+
+
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>{{$subscribers}}</h3>
+
+              <p>Total Users Subscribed</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-handshake-o"></i>
+            </div>
+            <a href="{{route('totalsubscribers')}}" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
           </div>

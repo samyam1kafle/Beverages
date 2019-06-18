@@ -28,3 +28,5 @@ $(document).ready(function(){
 		});
 	});
 });
+
+// Star Rating js

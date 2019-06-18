@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\News;
+use App\Models\News;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class newsController extends Controller
@@ -23,5 +24,14 @@ class newsController extends Controller
         $news_category = News::all();
         return view('Backend/Products/News/create',compact('news_category'));
 
+    }
+
+    public function all_reviews(){
+        $reviews = Review::orderBy('id','desc')->paginate(10);
+        return view('Backend/review',compact('reviews'));
+    }
+
+    public function update(Request $request ,$slug = null){
+        return view('Backend/review',compact('reviews'));
     }
 }

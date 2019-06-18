@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
-use App\Products;
+use App\Models\Category;
+use App\Models\Products;
 use Illuminate\Http\Request;
 
 class SinglePageController extends Controller

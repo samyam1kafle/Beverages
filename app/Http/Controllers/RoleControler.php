@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Roles;
+use App\Models\AllUser;
+use App\Models\Products;
+use App\Models\Roles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -38,6 +40,8 @@ class RoleControler extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate(['name'=>'required']);
+
         $new_role = Roles::create($request->all());
         if ($new_role) {
             Session::flash('success', 'New Role Created Successfully');
@@ -97,11 +101,17 @@ class RoleControler extends Controller
     public function destroy($id)
     {
         $delete = Roles::findOrFail($id);
-        $deleted = $delete->delete();
-        if ($deleted) {
+        if(AllUser::where('role','=',$delete->id)->first()){
+            return redirect()->back()->with('Error','Role is associated with users cannot delete the Role');
+        }else{
+            $deleted = $delete->delete();
+            if ($deleted) {
 
-Session::flash('delete','Role Deleted Successfully');
-            return redirect()->route('roles.index');
+                Session::flash('delete','Role Deleted Successfully');
+                return redirect()->route('roles.index');
+            }
         }
+
+
     }
 }

@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <div class="social-icons pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="{{url('https://www.facebook.com')}}"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                         </ul>
                     </div>
@@ -27,20 +27,36 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="{{route('home-index')}}"><img src="images/home/logo.png" alt=""/></a>
+                        <a href="{{route('home-index')}}"><img src="{{asset('images/home/logo.png')}}" alt=""/></a>
                     </div>
 
                 </div>
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-                            <li><a href="{{route('admin')}}"><i class="fa fa-male"></i> Admin</a></li>
+                            <li><a href="{{route('viewblogs')}}"><i class="fa fa-globe"></i> Blogs</a></li>
+                            @if(Auth::check())
+                            <li><a href="{{route('account')}}"><i class="fa fa-user"></i> Account</a></li>
+                            <li><a href="{{route('wishlist')}}"><i class="fa fa-star"></i> Wishlist</a></li>
+                            <li><a href="{{route('checkout')}}"><i class="fa fa-crosshairs"></i>Checkout</a></li>
+                            <li><a href="{{route('cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            @endif
+                            @if(!Auth::user())
+                                <li><a href="{{route('login')}}"><i class="fa fa-sign-in"></i> Login </a></li>
+                                <li><a href="{{route('Register')}}"><i class="fa fa-users"></i> SignUp</a>
+                                    @endif
 
-                            <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-                            <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                            <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                            <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
+                                </li>
+
+                                @if(Auth::user())
+                                    @if(Auth::user()->role === 41)
+                                        <li><a href="{{route('admin')}}"><i class="fa fa-male"></i> Admin</a></li>
+                                    @endif
+                                    <ul class="nav navbar-nav">
+                                        <li><a href="{{route('log-out')}}"><i class="fa fa-sign-out"></i> Logout</a>
+                                        </li>
+                                    </ul>
+                                @endif
                         </ul>
                     </div>
                 </div>
@@ -65,10 +81,23 @@
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="{{route('home-index')}}" class="active">Home</a></li>
                             @foreach($category->where('parent_id','=',0) as $categories)
-                                <li class="dropdown"><a href="{{$categories ? route('products',$categories->slug) : '#'}}">{{$categories->title}}<i class="fa fa-angle-down"></i></a>
+                                <li class="dropdown"><a
+                                            href="{{$categories ? route('products',$categories->slug) : '#'}}">{{$categories->title}}
+                                    </a>
                                     <ul role="menu" class="sub-menu">
                                         @foreach($category->where('parent_id','=',$categories->id) as $caategory)
-                                            <li><a href="{{route('products',$caategory->slug)}}">{{$caategory->title}}</a></li>
+                                            <li class="dropdown">
+                                                <a href="{{route('products',$caategory->slug)}}">{{$caategory->title}}
+                                                    <i class="fa fa-angle-down"></i></a>
+                                                <ul role="menu" class="sub-menu">
+                                                    @foreach($category->where('parent_id','=',$caategory->id) as $caaategory)
+                                                        <li>
+                                                            <a href="{{route('products',$caaategory->slug)}}">{{$caaategory->title}}
+                                                                <i class="fa fa-angle-down"></i></a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </li>
@@ -78,11 +107,18 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <div class="search_box pull-right">
-                        <input type="text" placeholder="Search"/>
+                <form action="{{route('Frontendsearch')}}" method="post">
+                    {{csrf_field()}}
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <input type="text" name="query" class="form-control" placeholder="Search...">
+                            <span class="input-group-btn">
+                <button type="submit" value="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div><!--/header-bottom-->

@@ -41,7 +41,6 @@
                                     <th>slug</th>
                                     <th>Image</th>
                                     <th>Description</th>
-                                    <th>category</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Edit</th>
@@ -60,8 +59,8 @@
                                         <td>
                                             <img src="{{asset('uploads/Products/Special_Offers/'.$blog->image)}}" alt="" width="150px" height="100">
                                         </td>
-                                        <td>{{str_limit($blog->description,250)}}</td>
-                                        <td>{{$blog->category_id ? $blog->blog_category->title : ''}}</td>
+                                        <td>{!!  str_limit($blog->description,250)!!}</td>
+
                                         <td>{{$blog->created_at}}</td>
                                         <td>{{$blog->updated_at}}</td>
                                         <td>
