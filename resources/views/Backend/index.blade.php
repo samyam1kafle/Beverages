@@ -43,14 +43,16 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>{{$orders}}</h3>
+              <h3>{{$orders->count()}}</h3>
 
               <p>Total Order</p>
             </div>
             <div class="icon">
               <i class="fa fa-shopping-basket"></i>
             </div>
-            <a href="{{route('BackendCart')}}" class="small-box-footer">
+            {{--<a href="{{route('BackendCart')}}" class="small-box-footer">--}}
+              {{--More info <i class="fa fa-arrow-circle-right"></i>--}}
+                <a href="{{url('admin/orders')}}" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
             </a>
           </div>
@@ -61,7 +63,7 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>{{$categories}}<sup style="font-size: 20px">%</sup></h3>
+              <h3>{{$categories}}<sup style="font-size: 20px"></sup></h3>
 
               <p>Total Categories</p>
             </div>

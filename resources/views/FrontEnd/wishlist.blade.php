@@ -41,7 +41,7 @@
                                     <del>Rs. {{$wish->products->price}}</del>
                                 @endif
                                     <h2>
-                                        Rs. {{$wish->products->offer ? $wish->products->offer : $wish->products->price}}</h2>
+                                        Rs. {{$wish->products->offer ? $wish->products->offer_price : $wish->products->price}}</h2>
                             </td>
 
                             <td class="cart_quantity">

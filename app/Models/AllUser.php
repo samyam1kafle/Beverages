@@ -43,4 +43,8 @@ class AllUser extends Auth implements Searchable, MustVerifyEmail
     {
         return $this->belongsTo('App\Models\Roles', 'role');
     }
+
+    public function orders(){
+        return $this->hasMany('App\Models\Order');
+    }
 }

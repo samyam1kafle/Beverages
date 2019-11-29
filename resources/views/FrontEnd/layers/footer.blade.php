@@ -72,15 +72,15 @@
                             <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i>
                             </button>
                         </form>
-                        <h2>Un-Subscribe</h2>
-                        <form action="{{route('unsubscribe_mail')}}" class="searchform">
-                            {{csrf_field()}}
-                            <input type="email" style="color: #0a0a0a" name="email" placeholder="Your email address"/>
+                        {{--<h2>Un-Subscribe</h2>--}}
+                        {{--<form action="{{route('unsubscribe_mail')}}" class="searchform">--}}
+                            {{--{{csrf_field()}}--}}
+                            {{--<input type="email" style="color: #0a0a0a" name="email" placeholder="Your email address"/>--}}
 
-                            <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i>
-                            </button>
+                            {{--<button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i>--}}
+                            {{--</button>--}}
 
-                        </form>
+                        {{--</form>--}}
                     </div>
                 </div>
 

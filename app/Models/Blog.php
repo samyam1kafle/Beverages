@@ -37,5 +37,9 @@ class Blog extends Model
         return $this->belongsTo('App\Models\Category','category_id');
     }
 
+    public function review(){
+        return $this->hasMany('App\Models\blogReview');
+    }
+
 
 }

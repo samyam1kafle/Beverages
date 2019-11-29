@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                             {{csrf_field()}}
-                            <button type="submit" class="btn btn-sm btn-primary">Checkout</button>
+                            <button type="submit" class="btn btn-sm btn-primary">Update & checkout</button>
                             <button type="submit" class="btn btn-sm btn-danger">Cancel</button>
                         </form>
                     </div>
@@ -122,11 +122,13 @@
 
                                     <tr>
                                         <td class="cart_product">
-                                            <a href=""><img src="{{asset('uploads/Products/thumbnail/'.$product->image)}}"
-                                                            style="width: 72px" alt=""></a>
+                                            <a href=""><img
+                                                        src="{{asset('uploads/Products/thumbnail/'.$product->image)}}"
+                                                        style="width: 72px" alt=""></a>
                                         </td>
                                         <td class="cart_description">
-                                            <h4><a href="">{{$product->product_name}} | {{$product->product_volume}}</a></h4>
+                                            <h4><a href="">{{$product->product_name}} | {{$product->product_volume}}</a>
+                                            </h4>
 
                                         </td>
                                         <td class="cart_total">
@@ -135,10 +137,11 @@
 
                                         <td class="cart_quantity">
                                             <div class="cart_quantity_button">
-                                                <a class="cart_quantity_up" href=""> + </a>
+
                                                 <input class="cart_quantity_input" type="text" name="quantity"
-                                                       value="{{$product->quantity}}" autocomplete="off" size="2">
-                                                <a class="cart_quantity_down" href=""> - </a>
+                                                       value="{{$product->quantity}}" autocomplete="off" size="2"
+                                                       disabled>
+
                                             </div>
                                         </td>
 
@@ -146,7 +149,8 @@
                                             <p>Rs {{$product->price * $product->quantity}}</p>
                                         </td>
                                         <td class="cart_delete">
-                                            <a class="cart_quantity_delete" href="{{url('cart/delete',$product->slug)}}"><i
+                                            <a class="cart_quantity_delete"
+                                               href="{{url('cart/delete',$product->slug)}}"><i
                                                         class="fa fa-times"></i></a>
                                         </td>
 
@@ -180,7 +184,10 @@
                                                 <td>Total</td>
                                                 <td><span>Rs. {{$total}}</span></td>
                                             </tr>
+
+
                                             </tbody>
+
                                         </table>
                                     </td>
                                 </tr>
@@ -192,8 +199,7 @@
             </div>
 
 
-
-    </div>
+        </div>
 
         <br><br>
 @endsection

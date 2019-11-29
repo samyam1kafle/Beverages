@@ -57,10 +57,8 @@
 
                             <td class="cart_quantity">
                                 <div class="cart_quantity_button">
-                                    <a class="cart_quantity_up" href=""> + </a>
                                     <input class="cart_quantity_input" type="text" name="quantity"
-                                           value="{{$product->quantity}}" autocomplete="off" size="2">
-                                    <a class="cart_quantity_down" href=""> - </a>
+                                           value="{{$product->quantity}}" autocomplete="off" size="2" disabled>
                                 </div>
                             </td>
 
@@ -80,6 +78,7 @@
 
                     <tr>
                         <td colspan="4">&nbsp;</td>
+
                         <td colspan="2">
                             <table class="table table-condensed total-result">
                                 <tbody>
@@ -95,19 +94,35 @@
                                     <td>Shipping Cost</td>
                                     @if($shipping_cost != null)
                                         <td>Rs. {{$shipping_cost}}</td>
-                                        @else
+                                    @else
                                         <td>Free</td>
                                     @endif
 
                                 </tr>
+
+
                                 <tr>
                                     <td>Total</td>
                                     <td><span>Rs. {{$total}}</span></td>
                                 </tr>
+
+                                <tr>
+
+                                    <td>
+                                        <hr>
+                                        <a href="{{route('home-index')}}" class="btn btn-sm btn-primary ">Shop More</a>
+                                    </td>
+                                    <td>
+                                        <hr>
+                                        <a href="{{route('checkout')}}" class="btn btn-sm btn-primary ">Checkout</a>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </td>
+
                     </tr>
+
                     </tbody>
                 </table>
             </div>

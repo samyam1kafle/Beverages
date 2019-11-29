@@ -99,6 +99,25 @@
 
 
                             <li class="treeview">
+                                <a href="#" style=""><i class="fa fa-envelope-o"></i>Contact Us
+                                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                                </a>
+
+                                <ul class="treeview-menu" style="display: none;">
+                                    <li><a href="{{route('inbox')}}"><i class="fa fa-envelope"></i>Inbox</a></li>
+
+                                    <li><a href="{{route('create_mail')}}"><i class="fa fa-envelope"></i>Compose
+                                            Mail</a></li>
+
+
+                                </ul>
+
+                            </li>
+
+
+                            <li class="treeview">
                                 <a href="#" style=""><i class="fa fa-shopping-bag"></i> Products
                                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
@@ -167,6 +186,42 @@
 
                                     {{--<li><a href="{{route('index')}}"><i class="fa fa-diamond"></i> View All News</a>--}}
                                     {{--</li>--}}
+                                    {{--<li><a href="{{route('add-news')}}"><i class="fa fa-diamond"></i>Add News</a></li>--}}
+                                </ul>
+
+
+                            </li>
+
+                            <li class="treeview" id="dropdown">
+                                <a href="#" style=""><i class="fa fa-user"></i> Banner
+                                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                                </a>
+                                <ul class="treeview-menu" style="display: none;">
+                                    <li><a href="{{route('banner')}}"><i class="fa fa-diamond"></i> View All Banners</a>
+                                    </li>
+
+                                    <li><a href="{{route('bannercreate')}}"><i class="fa fa-diamond"></i> Create new Banner</a>
+                                    </li>
+                                    {{--<li><a href="{{route('add-news')}}"><i class="fa fa-diamond"></i>Add News</a></li>--}}
+                                </ul>
+
+
+                            </li>
+
+                            <li class="treeview" id="dropdown">
+                                <a href="#" style=""><i class="fa fa-newspaper-o"></i> Banner status
+                                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                                </a>
+                                <ul class="treeview-menu" style="display: none;">
+                                    <li><a href="{{route('bannerstatusindex')}}"><i class="fa fa-hacker-news"></i> View Banner Status</a>
+                                    </li>
+
+                                    <li><a href="{{route('bannerstatuscreate')}}"><i class="fa fa-hacker-news"></i> Create New Status</a>
+                                    </li>
                                     {{--<li><a href="{{route('add-news')}}"><i class="fa fa-diamond"></i>Add News</a></li>--}}
                                 </ul>
 

@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="{{route('home-index')}}"><img src="{{asset('images/home/logo.png')}}" alt=""/></a>
+                        <a href="{{route('home-index')}}"><img src="{{asset('logos/nab.png')}}" height="80px" alt=""/></a>
                     </div>
 
                 </div>
@@ -39,7 +39,7 @@
                             <li><a href="{{route('account')}}"><i class="fa fa-user"></i> Account</a></li>
                             <li><a href="{{route('wishlist')}}"><i class="fa fa-star"></i> Wishlist</a></li>
                             <li><a href="{{route('checkout')}}"><i class="fa fa-crosshairs"></i>Checkout</a></li>
-                            <li><a href="{{route('cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <li><a href="{{route('cart')}}"><i class="fa fa-shopping-cart"></i> Cart </a></li>
                             @endif
                             @if(!Auth::user())
                                 <li><a href="{{route('login')}}"><i class="fa fa-sign-in"></i> Login </a></li>

@@ -98,7 +98,9 @@ class AddressController extends Controller
             $user->address2 = $request->address2;
 
             $saved = $user->update();
+
             if ($saved) {
+                $user = Auth::user();
                 foreach ($products as $product) {
                     $subtotal += $product->price * $product->quantity;
 
@@ -113,20 +115,21 @@ class AddressController extends Controller
                         $shipping_cost = null;
                     }
                     $total += $subtotal + $tax + $shipping_cost;
-                }
-                $orders = Order::create([
-                    'product_id' => $product->id,
-                    'user_id' => $user->user_id,
-                    'qty' => $product->quantity,
-                    'price' => $product->price,
-                    'order_status' => 1,
-                    'total_price' => $total
-                ]);
-                $saveed = $orders->save();
-                if ($saveed) {
-                    return redirect()->back()->with('success', 'Order Placed Successfully');
-                }
 
+                    $orders = $user->orders()->create([
+                        'all_user_id'=>$user->id,
+                        'total'=>$total,
+                        'order_status'=>0
+                    ]);
+
+                   $orders->orderItems()->attach($product->id,[
+                        'qty'=>$product->quantity,
+                        'total_amount'=>$total
+                    ]);
+
+
+                }
+                return redirect()->back()->with('success', 'Order Placed Successfully');
             }
         }
 

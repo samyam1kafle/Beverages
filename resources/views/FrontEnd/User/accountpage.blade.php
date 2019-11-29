@@ -8,28 +8,39 @@
 
                     <h4 class="modal-title" id="myModalLabel">Edit your account info</h4>
                 </div>
-                <form>
+                @if(count($errors)>0)
+                    @foreach($errors->all() as $error)
+                        {{Session::flash('Error',$error)}}
+                    @endforeach
+                @endif
+                <form action="{{route('update_user')}}" method="post">
                     <div class="modal-body">
+                        <input type="hidden" name="name" value="{{Auth::user()->name}}">
+                        <input type="hidden" name="image" value="{{Auth::user()->image}}">
+                        <input type="hidden" name="role" value="{{Auth::user()->role}}">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                            <input type="email" class="form-control" name="email" id="exampleInputEmail1"
+                                   placeholder="{{Auth::user()->email}}" disabled>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword">Old-Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword"
+                            <input type="password" name="old_password" class="form-control" id="exampleInputPassword"
                                    placeholder="Old Password">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1"
+                            <input type="password" name="password" class="form-control" id="exampleInputPassword1"
                                    placeholder="Password">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword2">Re-Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword2"
-                                   placeholder="Re-Password">
+                            <label for="exampleInputPassword2">Confirm Password</label>
+                            <input type="password" name="password_confirmation" class="form-control"
+                                   id="exampleInputPassword2"
+                                   placeholder="Confirm Password">
                         </div>
                     </div>
+                    {{csrf_field()}}
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
@@ -47,35 +58,29 @@
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">Edit your personal info</h4>
                 </div>
-                <form>
+                <form action="{{route('update_user_photo')}}" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="firstName">First Name</label>
-                            <input type="text" class="form-control" id="firstName">
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Last Name</label>
-                            <input type="text" class="form-control" id="lastName">
-                        </div>
-                        <div class="form-group">
                             <label for="userName">User Name</label>
-                            <input type="text" class="form-control" id="userName">
+                            <input type="text" value="{{Auth::user()->name}}" name="name" class="form-control" id="userName">
                         </div>
-                        <div class="form-group">
-                            <label for="gender">Gender</label>
-                            <div class="radio">
-                                <label><input type="radio" name="gender">Male</label>
+                        @if(Auth::user()->image != null)
+                            <label>Image</label>
+                            <div class="form-group">
+                                <img src="{{asset('uploads/Users/'.Auth::user()->image)}}" alt="" width="150" height="150px">
+                                <input type="file" id="datepicker" name="image" class="form-control" placeholder="Choose">
+                            </div>
+                        @endif
 
+                        @if(Auth::user()->image == null)
+                            <div class="form-group">
+                                <label>Image</label>
+                                <input type="file" id="datepicker" name="image" class="form-control" placeholder="Choose">
                             </div>
-                            <div class="radio">
-                                <label><input type="radio" name="gender">Female</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Date Of Birth</label>
-                            <input type="text" id="datepicker" class="form-control" placeholder="Choose">
-                        </div>
+                        @endif
+                        
                     </div>
+                    {{csrf_field()}}
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
@@ -150,7 +155,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="alert alert-info">
-                            <strong>Success!</strong> Indicates a successful or positive action.
+                            <strong>Account Section  </strong>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -171,9 +176,9 @@
                         </div>
                         <div class="grouplist tab d-none d-sm-block">
                             <ul class="liststyle--none">
-                                <li><a href="javascript:void(0)" class="tabslinks"
-                                       onclick="accountsettings(event, 'orders')"><i
-                                                class="fas fa-book fa-2x mr-10"></i>My orders</a></li>
+                                {{--<li><a href="javascript:void(0)" class="tabslinks"--}}
+                                       {{--onclick="accountsettings(event, 'orders')"><i--}}
+                                                {{--class="fas fa-book fa-2x mr-10"></i>My orders</a></li>--}}
                                 <li><a href="javascript:void(0)" class="tabslinks"
                                        onclick="accountsettings(event, 'address')"><i
                                                 class="fas fa-address-card fa-2x mr-10"></i>Shipping addresses</a></li>
@@ -211,11 +216,12 @@
                                             <div class="panel-body">
 
                                                 <ul class="liststyle--none">
-                                                    <li><span class="mr-10 bold">Name:</span><span
-                                                                class="userInfo--name">{{Auth::User()->name}}</span>
+                                                    <li>
+                                                        <span class="mr-10 bold userInfo--name">Name: {{Auth::User()->name}}</span>
                                                     </li>
                                                     <li><span class="mr-10 bold">Password:</span><span
                                                                 class="userInfo--password data">********</span></li>
+                                                    <br>
                                                     <li><a class="link" href="javascript:void(0)" data-toggle="modal"
                                                            data-target="#edit_account_info">Change Password</a></li>
                                                 </ul>
@@ -242,7 +248,8 @@
                                                         <div class="container">
                                                             <div class="col-sm-12">
                                                                 <div class="col-sm-3">
-                                                                    <li><span class="mr-10 bold">Name:</span>{{Auth::User()->name}}
+                                                                    <li>
+                                                                        <span class="mr-10 bold">Name:</span>{{Auth::User()->name}}
                                                                     </li>
                                                                     <br>
                                                                     <li><span class="mr-10 bold">Email:</span><span
@@ -272,31 +279,31 @@
                             </div>
                         </div>
 
-                        <div class="container orders__container tabcontent" id="orders">
-                            <h3>My orders</h3>
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th>ORDERS#</th>
-                                        <th>DATE</th>
-                                        <th>SHIP TO</th>
-                                        <th>ORDER TOTAL</th>
-                                        <th>ORDER STATUS</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>john@example.com</td>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        {{--<div class="container orders__container tabcontent" id="orders">--}}
+                            {{--<h3>My orders</h3>--}}
+                            {{--<div class="table-responsive">--}}
+                                {{--<table class="table table-bordered">--}}
+                                    {{--<thead>--}}
+                                    {{--<tr>--}}
+                                        {{--<th>ORDERS#</th>--}}
+                                        {{--<th>DATE</th>--}}
+                                        {{--<th>SHIP TO</th>--}}
+                                        {{--<th>ORDER TOTAL</th>--}}
+                                        {{--<th>ORDER STATUS</th>--}}
+                                    {{--</tr>--}}
+                                    {{--</thead>--}}
+                                    {{--<tbody>--}}
+                                    {{--<tr>--}}
+                                        {{--<td>John</td>--}}
+                                        {{--<td>Doe</td>--}}
+                                        {{--<td>john@example.com</td>--}}
+                                        {{--<td>John</td>--}}
+                                        {{--<td>Doe</td>--}}
+                                    {{--</tr>--}}
+                                    {{--</tbody>--}}
+                                {{--</table>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
                         <div class="container wishlist__container tabcontent " id="wishlist">
                             <h3>My wishlist</h3>
@@ -309,7 +316,8 @@
                                         <tr>
                                             <td style="width:100px;">
                                                 <div class="wishlist-product-img">
-                                                    <a href="{{route('product-detail',$wish->products->slug)}}" class="d-block">
+                                                    <a href="{{route('product-detail',$wish->products->slug)}}"
+                                                       class="d-block">
 
                                                         <img src="{{asset('uploads/Products/thumbnail/'.$wish->products->image)}}"
                                                              alt="" style="width: 100%;">
@@ -317,7 +325,8 @@
                                                 </div>
                                             </td>
                                             <td style="width:100px;">
-                                                <a href="{{route('product-detail',$wish->products->slug)}}" class="link">{!!$wish->products->name!!}</a>
+                                                <a href="{{route('product-detail',$wish->products->slug)}}"
+                                                   class="link">{!!$wish->products->name!!}</a>
                                             </td>
                                             <td class="price">
                                                 @if($wish->products->offer)

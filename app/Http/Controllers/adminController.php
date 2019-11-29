@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\userUpdateValidation;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Products;
 use App\Models\Review;
 use App\Models\Roles;
@@ -23,7 +24,7 @@ class adminController extends Controller
         $categories = Category::all()->count();
         $users = AllUser::all()->count();
         $roles = Roles::all()->count();
-        $orders = Cart::all()->count();
+        $orders = Order::all();
         $subscribers = subscribers::all()->count();
         return view('Backend/index', compact('products', 'categories', 'users', 'roles', 'orders'
             , 'subscribers'
@@ -84,4 +85,5 @@ class adminController extends Controller
 
         return view('Backend/subscribers', compact('subscribers'));
     }
+
 }

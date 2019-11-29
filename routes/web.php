@@ -26,10 +26,13 @@ Route::group(['prefix' => '/'], function () {
     Route::any('/login', 'UserLoginController@login')->name('login');
 
 
-
     Route::get('/log-out', 'UserLoginController@signout')->name('log-out');
 
     Route::get('/Register', 'FrontEndUserController@registerview')->name('Register');
+
+    Route::post('Update/user', 'FrontEndUserController@update_user')->name('update_user');
+
+    Route::post('Update/user/photo', 'FrontEndUserController@update_user_photo')->name('update_user_photo');
 
     Route::post('/Register', 'FrontEndUserController@storeregistered')->name('userRegister');
 
@@ -49,7 +52,6 @@ Route::group(['prefix' => '/'], function () {
     Route::get('blogs', 'FrontEndController@viewblogs')->name('viewblogs');
 
     Route::any('blogs/blogdetail/{slug}', 'FrontEndController@viewsingleblog')->name('viewsingleblogs');
-
 
 
 //Cart Detail Page (ie:add-to-cart)
@@ -87,10 +89,13 @@ Route::group(['prefix' => '/'], function () {
 
     Route::any('checkout', 'AddressController@checkout')->name('checkout');
 
-    Route::post('shipping/create','AddressController@store')->name('shipping-address');
+    Route::post('shipping/create', 'AddressController@store')->name('shipping-address');
+
+
+    //Contact Us Route
+
+    Route::resource('contact-us','ContactUs');
 });
-
-
 
 
 //Admin routes
@@ -159,10 +164,53 @@ Route::group(['prefix' => 'admin', 'middleware' => 'Admin'], function () {
 
 //    Blogs review routes
 
-Route::get('blog_review','backendblogController@index')->name('blog-review');
+    Route::get('blog_review', 'backendblogController@index')->name('blog-review');
 
-Route::DELETE('blog_review/delete/{id}','backendblogController@delete')->name('blog-review-delete');
+    Route::DELETE('blog_review/delete/{id}', 'backendblogController@delete')->name('blog-review-delete');
 
+
+//Order Controler
+
+    Route::resource('/orders', 'ordersController');
+
+//Banner controller
+
+    Route::get('/banner', 'BannerController@index')->name('banner');
+
+//banner create
+
+    Route::any('/banner/create', 'BannerController@createbanner')->name('bannercreate');
+    Route::post('/banner/save', 'BannerController@savebanner')->name('bannersave');
+
+//banner update routes
+
+    Route::get('/banner/update/{id}', 'BannerController@updatebanner')->name('banner_edit');
+
+    Route::any('/banner/update/{idd}', 'BannerController@saveupdatedbanner')->name('banner_edit_store');
+
+    //delete banner
+
+    Route::DELETE('/banner/dlt/{id}','BannerController@dltbanner')->name('dltbanner');
+
+//Banner status routes {{
+    //index
+    Route::get('/banner/status/index', 'BannerController@bannerstatusindex')->name('bannerstatusindex');
+
+    //create
+
+    Route::get('/banner/status/create', 'BannerController@bannerstatuscreate')->name('bannerstatuscreate');
+    Route::post('/banner/status/store', 'BannerController@bannerstatussave')->name('bannerstatussave');
+
+    //update
+
+    Route::get('/banner/status/edit/{id}', 'BannerController@bannerstatuseditpage')->name('bannerstatuseditpage');
+    Route::any('/banner/status/editsave/{id}', 'BannerController@bannerstatusedit')->name('bannerstatusedit');
+
+    //delete
+
+    Route::DELETE('/banner/delete/{id}', 'BannerController@bannerstatusdelete')->name('deletestatus');
+
+    // }}
 });
 
 

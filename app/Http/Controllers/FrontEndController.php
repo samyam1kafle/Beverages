@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Blog;
 use App\Models\blogReview;
 use App\Models\Cart;
@@ -9,6 +10,7 @@ use App\Models\Category;
 use App\Models\Products;
 use App\Models\Review;
 use Auth;
+use Melihovv\ShoppingCart\CartItem;
 use Session;
 use Illuminate\Http\Request;
 
@@ -17,8 +19,10 @@ class FrontEndController extends Controller
     public function index()
     {
         $category = Category::all();
+        $banners = Banner::orderBy('status_id','desc')->limit(4)->get();
+        $baner_count = Banner::all()->take(4)->count();
         $products = Products::inRandomOrder()->limit(3)->get();
-        return view('FrontEnd/index', compact('category', 'products'));
+        return view('FrontEnd/index', compact('category', 'products','banners','baner_count'));
     }
 
     public function shop($slug = null)
@@ -47,17 +51,17 @@ class FrontEndController extends Controller
     public function store(Request $request, $slug = null)
     {
         $request->validate([
-            'review'=>'required'
+            'review' => 'required'
         ]);
 
         $product = Products::where('slug', '=', $slug)->first();
         $reviews = Review::create([
-            'product_id'=>$request->product_id,
+            'product_id' => $request->product_id,
             'author' => $request->author,
             'review' => $request->review,
             'author_email' => $request->author_email,
-            'star'=>$request->star,
-            'author_id'=>$request->author_id
+            'star' => $request->star,
+            'author_id' => $request->author_id
 
         ]);
         $reviewed = $reviews->save();
@@ -77,6 +81,9 @@ class FrontEndController extends Controller
             $product = Products::find($request->product_id);
             $product->stock = $product->stock - $request->quantity;
             $product->update();
+
+//            $cart = cart::add($request->product_id,$request->product_name,$request->product_volume,$request->image,$request->stock,$request->price,$request->quantity);
+//            dd($cart);
             $session_id = session('session_id');
 
             if (empty($session_id)) {
@@ -159,33 +166,31 @@ class FrontEndController extends Controller
         return view('FrontEnd\blogs\viewblogs', compact('category', 'blogs'));
     }
 
-    public function viewsingleblog(Request $request , $slug = null)
+    public function viewsingleblog(Request $request, $slug = null)
     {
-        if($request->isMethod('post')){
+        if ($request->isMethod('post')) {
             $request->validate([
-                'comment'=>'required'
+                'comment' => 'required'
             ]);
             $blog_review = blogReview::create([
-                'user_id'=>$request->user_id,
-                'email'=>$request->email,
-                'blog_id'=>$request->blog_id,
-                'comment'=>$request->comment,
-                'star'=>$request->star
+                'user_id' => $request->user_id,
+                'email' => $request->email,
+                'blog_id' => $request->blog_id,
+                'comment' => $request->comment,
+                'star' => $request->star
             ]);
             $comment = $blog_review->save();
-            if($comment){
-                return redirect()->back()->with('success','Thank you for your review on our blog.');
+            if ($comment) {
+                return redirect()->back()->with('success', 'Thank you for your review on our blog.');
             }
         }
 
-        if($request->isMethod('get')){
+        if ($request->isMethod('get')) {
             $category = Category::all();
             $blogs = Blog::where('slug', '=', $slug)->first();
-            $average = blogReview::where('blog_id','=',$blogs->id)->get();
-
+            $average = blogReview::where('blog_id', '=', $blogs->id)->get();
             $comments = $blogs->review()->orderBy('status', 'desc')->paginate(3);
-
-            return view('FrontEnd\blogs\blogdetail', compact('category', 'blogs','comments','average'));
+            return view('FrontEnd\blogs\blogdetail', compact('category', 'blogs', 'comments', 'average'));
         }
 
 
